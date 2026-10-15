@@ -1,0 +1,17 @@
+# secrets: never commit the real key (copy .env.example to .env)
+.env
+.env.*
+!.env.example
+
+# local environments / build output
+.venv/
+__pycache__/
+*.pyc
+frontend/node_modules/
+frontend/dist/
+.DS_Store
+
+# local-only: the course-provided folder (its database is duplicated in data/) and reset backups
+data 3/
+data/backups/
+output/*.corrupt-*.json

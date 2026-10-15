@@ -1,0 +1,747 @@
+{
+  "run_at": "2026-10-15T13:25:19",
+  "server_config": "backend/common.py mcp_config() (same server as .mcp.json)",
+  "transport": "stdio (fastmcp.Client, same launch config as the backend)",
+  "database": "temporary copy of data/campus_customs.db (original)",
+  "tools_listed_by_server": [
+    "get_ticket_context",
+    "check_stock",
+    "get_finances",
+    "quote_margin",
+    "get_lease_status",
+    "get_board",
+    "resolve_ticket",
+    "request_payment_approval",
+    "request_purchase_order",
+    "draft_customer_message",
+    "decide_approval"
+  ],
+  "all_passed": true,
+  "db_sha256_before": "23686a90d698f7fa6f901a3f0a9774db9cbb31e13151c9e5717275f3321f360a",
+  "db_sha256_after_restore": "23686a90d698f7fa6f901a3f0a9774db9cbb31e13151c9e5717275f3321f360a",
+  "db_restored_unchanged": true,
+  "calls": [
+    {
+      "vibe_coder_prompt": "Show me every open Campus Customs ticket with all the inventory, pricing, invoice, lease and cash info linked to it.",
+      "tool": "get_ticket_context",
+      "arguments": {},
+      "expected": "ok",
+      "outcome": "ok",
+      "passed": true,
+      "verified_against_db": [
+        "date_today 2026-08-31 == desk.date_today",
+        "open tickets [101, 102, 103] == tickets WHERE status='open'",
+        "ticket 101: tee S qty 0, invoice 501 $840.0"
+      ],
+      "tool_output": {
+        "date_today": "2026-08-31",
+        "cash_accounts": [
+          {
+            "name": "checking",
+            "balance": 3400.0,
+            "date": "2026-08-31"
+          }
+        ],
+        "vendors": [
+          {
+            "id": 1,
+            "name": "Bulldog Print Co",
+            "specialty": "apparel reprint",
+            "lead_days": 5
+          },
+          {
+            "id": 2,
+            "name": "Elm City Gifts",
+            "specialty": "mugs and small goods",
+            "lead_days": 3
+          },
+          {
+            "id": 3,
+            "name": "QuickShip CT",
+            "specialty": "local courier",
+            "lead_days": 1
+          }
+        ],
+        "tickets": [
+          {
+            "ticket": {
+              "id": 101,
+              "type": "customer_order",
+              "requester": "Tauhid Zaman",
+              "subject": "Bulldog tee",
+              "sku": "CC-TEE-WHITE",
+              "size": "S",
+              "qty": 1,
+              "lease_id": null,
+              "invoice_id": 501,
+              "status": "open",
+              "notes": "Needs a tee in size S.",
+              "created_at": "2026-08-31T09:15:00-04:00"
+            },
+            "inventory_requested_size": {
+              "sku": "CC-TEE-WHITE",
+              "name": "Classic Bulldog Tee",
+              "size": "S",
+              "qty": 0,
+              "location": "Aisle B"
+            },
+            "inventory_all_sizes": [
+              {
+                "sku": "CC-TEE-WHITE",
+                "name": "Classic Bulldog Tee",
+                "size": "S",
+                "qty": 0,
+                "location": "Aisle B"
+              },
+              {
+                "sku": "CC-TEE-WHITE",
+                "name": "Classic Bulldog Tee",
+                "size": "M",
+                "qty": 5,
+                "location": "Aisle B"
+              },
+              {
+                "sku": "CC-TEE-WHITE",
+                "name": "Classic Bulldog Tee",
+                "size": "L",
+                "qty": 3,
+                "location": "Aisle B"
+              },
+              {
+                "sku": "CC-TEE-WHITE",
+                "name": "Classic Bulldog Tee",
+                "size": "XL",
+                "qty": 2,
+                "location": "Aisle B"
+              }
+            ],
+            "pricing": {
+              "sku": "CC-TEE-WHITE",
+              "unit_cost": 8.0,
+              "list_price": 28.0
+            },
+            "invoice": {
+              "id": 501,
+              "vendor_id": 1,
+              "amount": 840.0,
+              "due_date": "2026-08-28",
+              "status": "open",
+              "description": "Rush reprint CC-TEE-WHITE S"
+            },
+            "invoice_vendor": {
+              "id": 1,
+              "name": "Bulldog Print Co",
+              "specialty": "apparel reprint",
+              "lead_days": 5
+            },
+            "lease": null,
+            "approvals": [],
+            "drafts": []
+          },
+          {
+            "ticket": {
+              "id": 102,
+              "type": "rent_notice",
+              "requester": "Elm City Properties",
+              "subject": "Rent due",
+              "sku": null,
+              "size": null,
+              "qty": null,
+              "lease_id": 1,
+              "invoice_id": null,
+              "status": "open",
+              "notes": "Email: shop rent due in 2 days.",
+              "created_at": "2026-08-31T11:05:00-04:00"
+            },
+            "inventory_requested_size": null,
+            "inventory_all_sizes": [],
+            "pricing": null,
+            "invoice": null,
+            "invoice_vendor": null,
+            "lease": {
+              "id": 1,
+              "space_name": "Chapel Street shop",
+              "landlord": "Elm City Properties",
+              "monthly_rent": 2400.0,
+              "next_due": "2026-09-02",
+              "notes": null
+            },
+            "approvals": [],
+            "drafts": []
+          },
+          {
+            "ticket": {
+              "id": 103,
+              "type": "price_override",
+              "requester": "Yale AI Club",
+              "subject": "Bulk hoodie discount",
+              "sku": "CC-HOOD-NAVY",
+              "size": "M",
+              "qty": 20,
+              "lease_id": null,
+              "invoice_id": null,
+              "status": "open",
+              "notes": "Student org wants 20 hoodies, size M, asking for a bulk discount.",
+              "created_at": "2026-08-31T16:55:00-04:00"
+            },
+            "inventory_requested_size": {
+              "sku": "CC-HOOD-NAVY",
+              "name": "Basic Hoodie Big Yale",
+              "size": "M",
+              "qty": 8,
+              "location": "Aisle A"
+            },
+            "inventory_all_sizes": [
+              {
+                "sku": "CC-HOOD-NAVY",
+                "name": "Basic Hoodie Big Yale",
+                "size": "S",
+                "qty": 4,
+                "location": "Aisle A"
+              },
+              {
+                "sku": "CC-HOOD-NAVY",
+                "name": "Basic Hoodie Big Yale",
+                "size": "M",
+                "qty": 8,
+                "location": "Aisle A"
+              },
+              {
+                "sku": "CC-HOOD-NAVY",
+                "name": "Basic Hoodie Big Yale",
+                "size": "L",
+                "qty": 14,
+                "location": "Aisle A"
+              },
+              {
+                "sku": "CC-HOOD-NAVY",
+                "name": "Basic Hoodie Big Yale",
+                "size": "XL",
+                "qty": 6,
+                "location": "Aisle A"
+              }
+            ],
+            "pricing": {
+              "sku": "CC-HOOD-NAVY",
+              "unit_cost": 22.0,
+              "list_price": 58.0
+            },
+            "invoice": null,
+            "invoice_vendor": null,
+            "lease": null,
+            "approvals": [],
+            "drafts": []
+          }
+        ]
+      }
+    },
+    {
+      "vibe_coder_prompt": "Pull up ticket 101 and everything it links to so I can see why the tee order is stuck.",
+      "tool": "get_ticket_context",
+      "arguments": {
+        "ticket_id": 101
+      },
+      "expected": "ok",
+      "outcome": "ok",
+      "passed": true,
+      "verified_against_db": [
+        "date_today 2026-08-31 == desk.date_today",
+        "ticket 101: tee S qty 0, invoice 501 $840.0"
+      ],
+      "tool_output": {
+        "date_today": "2026-08-31",
+        "cash_accounts": [
+          {
+            "name": "checking",
+            "balance": 3400.0,
+            "date": "2026-08-31"
+          }
+        ],
+        "vendors": [
+          {
+            "id": 1,
+            "name": "Bulldog Print Co",
+            "specialty": "apparel reprint",
+            "lead_days": 5
+          },
+          {
+            "id": 2,
+            "name": "Elm City Gifts",
+            "specialty": "mugs and small goods",
+            "lead_days": 3
+          },
+          {
+            "id": 3,
+            "name": "QuickShip CT",
+            "specialty": "local courier",
+            "lead_days": 1
+          }
+        ],
+        "tickets": [
+          {
+            "ticket": {
+              "id": 101,
+              "type": "customer_order",
+              "requester": "Tauhid Zaman",
+              "subject": "Bulldog tee",
+              "sku": "CC-TEE-WHITE",
+              "size": "S",
+              "qty": 1,
+              "lease_id": null,
+              "invoice_id": 501,
+              "status": "open",
+              "notes": "Needs a tee in size S.",
+              "created_at": "2026-08-31T09:15:00-04:00"
+            },
+            "inventory_requested_size": {
+              "sku": "CC-TEE-WHITE",
+              "name": "Classic Bulldog Tee",
+              "size": "S",
+              "qty": 0,
+              "location": "Aisle B"
+            },
+            "inventory_all_sizes": [
+              {
+                "sku": "CC-TEE-WHITE",
+                "name": "Classic Bulldog Tee",
+                "size": "S",
+                "qty": 0,
+                "location": "Aisle B"
+              },
+              {
+                "sku": "CC-TEE-WHITE",
+                "name": "Classic Bulldog Tee",
+                "size": "M",
+                "qty": 5,
+                "location": "Aisle B"
+              },
+              {
+                "sku": "CC-TEE-WHITE",
+                "name": "Classic Bulldog Tee",
+                "size": "L",
+                "qty": 3,
+                "location": "Aisle B"
+              },
+              {
+                "sku": "CC-TEE-WHITE",
+                "name": "Classic Bulldog Tee",
+                "size": "XL",
+                "qty": 2,
+                "location": "Aisle B"
+              }
+            ],
+            "pricing": {
+              "sku": "CC-TEE-WHITE",
+              "unit_cost": 8.0,
+              "list_price": 28.0
+            },
+            "invoice": {
+              "id": 501,
+              "vendor_id": 1,
+              "amount": 840.0,
+              "due_date": "2026-08-28",
+              "status": "open",
+              "description": "Rush reprint CC-TEE-WHITE S"
+            },
+            "invoice_vendor": {
+              "id": 1,
+              "name": "Bulldog Print Co",
+              "specialty": "apparel reprint",
+              "lead_days": 5
+            },
+            "lease": null,
+            "approvals": [],
+            "drafts": []
+          }
+        ]
+      }
+    },
+    {
+      "vibe_coder_prompt": "Check hoodie CC-HOOD-NAVY size M stock for 20 units and who can restock it.",
+      "tool": "check_stock",
+      "arguments": {
+        "sku": "CC-HOOD-NAVY",
+        "size": "M",
+        "needed_qty": 20
+      },
+      "expected": "ok",
+      "outcome": "ok",
+      "passed": true,
+      "verified_against_db": [
+        "hoodie M qty 8 == inventory.qty; shortfall 12; vendor 1 ships_new_product=False (open invoices [501])"
+      ],
+      "tool_output": {
+        "date_today": "2026-08-31",
+        "sku": "CC-HOOD-NAVY",
+        "requested_size": {
+          "sku": "CC-HOOD-NAVY",
+          "name": "Basic Hoodie Big Yale",
+          "size": "M",
+          "qty": 8,
+          "location": "Aisle A"
+        },
+        "needed_qty": 20,
+        "shortfall": 12,
+        "all_sizes": [
+          {
+            "sku": "CC-HOOD-NAVY",
+            "name": "Basic Hoodie Big Yale",
+            "size": "S",
+            "qty": 4,
+            "location": "Aisle A"
+          },
+          {
+            "sku": "CC-HOOD-NAVY",
+            "name": "Basic Hoodie Big Yale",
+            "size": "M",
+            "qty": 8,
+            "location": "Aisle A"
+          },
+          {
+            "sku": "CC-HOOD-NAVY",
+            "name": "Basic Hoodie Big Yale",
+            "size": "L",
+            "qty": 14,
+            "location": "Aisle A"
+          },
+          {
+            "sku": "CC-HOOD-NAVY",
+            "name": "Basic Hoodie Big Yale",
+            "size": "XL",
+            "qty": 6,
+            "location": "Aisle A"
+          }
+        ],
+        "pricing": {
+          "sku": "CC-HOOD-NAVY",
+          "unit_cost": 22.0,
+          "list_price": 58.0
+        },
+        "restock_cost_estimate": 264.0,
+        "vendors": [
+          {
+            "id": 1,
+            "name": "Bulldog Print Co",
+            "specialty": "apparel reprint",
+            "lead_days": 5,
+            "earliest_restock_date": "2026-09-05",
+            "open_invoice_ids": [
+              501
+            ],
+            "ships_new_product": false
+          },
+          {
+            "id": 2,
+            "name": "Elm City Gifts",
+            "specialty": "mugs and small goods",
+            "lead_days": 3,
+            "earliest_restock_date": "2026-09-03",
+            "open_invoice_ids": [],
+            "ships_new_product": true
+          },
+          {
+            "id": 3,
+            "name": "QuickShip CT",
+            "specialty": "local courier",
+            "lead_days": 1,
+            "earliest_restock_date": "2026-09-01",
+            "open_invoice_ids": [],
+            "ships_new_product": true
+          }
+        ],
+        "open_invoices_for_item": [],
+        "pending_purchase_orders": []
+      }
+    },
+    {
+      "vibe_coder_prompt": "Order 12 size M hoodies from Bulldog Print Co for ticket 103.",
+      "tool": "request_purchase_order",
+      "arguments": {
+        "vendor_id": 1,
+        "sku": "CC-HOOD-NAVY",
+        "size": "M",
+        "qty": 12,
+        "rationale": "smoke test",
+        "prepared_by": "accountant",
+        "ticket_id": 103
+      },
+      "expected": "refused",
+      "outcome": "refused",
+      "passed": true,
+      "verified_against_db": [
+        "refused by server: Vendor 1 (Bulldog Print Co) has open unpaid invoice(s) [501] and will not ship new product until they are paid"
+      ],
+      "tool_output": "Vendor 1 (Bulldog Print Co) has open unpaid invoice(s) [501] and will not ship new product until they are paid"
+    },
+    {
+      "vibe_coder_prompt": "Queue this month's rent for lease 1 for approval.",
+      "tool": "request_payment_approval",
+      "arguments": {
+        "pay_kind": "rent",
+        "ref_id": 1,
+        "rationale": "smoke test",
+        "prepared_by": "accountant",
+        "ticket_id": 102
+      },
+      "expected": "ok",
+      "outcome": "ok",
+      "passed": true,
+      "verified_against_db": [
+        "amount 2400.0 == leases.monthly_rent; status pending; no money moved (checking still 3400.0)"
+      ],
+      "tool_output": {
+        "approval": {
+          "id": 1,
+          "kind": "payment",
+          "ticket_id": 102,
+          "pay_kind": "rent",
+          "ref_id": 1,
+          "period_due": "2026-09-02",
+          "vendor_id": null,
+          "sku": null,
+          "size": null,
+          "qty": null,
+          "amount": 2400.0,
+          "amount_basis": "leases.monthly_rent, lease 1 to Elm City Properties, period due 2026-09-02",
+          "rationale": "smoke test",
+          "prepared_by": "accountant",
+          "status": "pending",
+          "created_at": "2026-08-31",
+          "decided_by": null,
+          "decided_at": null,
+          "decision_reason": null,
+          "payment_id": null,
+          "expected_date": null
+        },
+        "checking_balance": 3400.0,
+        "checking_after_all_pending_payments": 1000.0
+      }
+    },
+    {
+      "vibe_coder_prompt": "Have the accountant agent approve that rent payment itself.",
+      "tool": "decide_approval",
+      "arguments": {
+        "approval_id": 1,
+        "decision": "approved",
+        "decided_by": "accountant"
+      },
+      "expected": "refused",
+      "outcome": "refused",
+      "passed": true,
+      "verified_against_db": [
+        "refused by server: decided_by must be a human, not an agent role"
+      ],
+      "tool_output": "decided_by must be a human, not an agent role"
+    },
+    {
+      "vibe_coder_prompt": "As the human owner, approve rent approval 1.",
+      "tool": "decide_approval",
+      "arguments": {
+        "approval_id": 1,
+        "decision": "approved",
+        "decided_by": "smoke-test human"
+      },
+      "expected": "ok",
+      "outcome": "ok",
+      "passed": true,
+      "verified_against_db": [
+        "payment 1 recorded; checking 3400.0 -> 1000.0"
+      ],
+      "tool_output": {
+        "approval": {
+          "id": 1,
+          "kind": "payment",
+          "ticket_id": 102,
+          "pay_kind": "rent",
+          "ref_id": 1,
+          "period_due": "2026-09-02",
+          "vendor_id": null,
+          "sku": null,
+          "size": null,
+          "qty": null,
+          "amount": 2400.0,
+          "amount_basis": "leases.monthly_rent, lease 1 to Elm City Properties, period due 2026-09-02",
+          "rationale": "smoke test",
+          "prepared_by": "accountant",
+          "status": "approved",
+          "created_at": "2026-08-31",
+          "decided_by": "smoke-test human",
+          "decided_at": "2026-08-31",
+          "decision_reason": null,
+          "payment_id": 1,
+          "expected_date": null
+        },
+        "payment": {
+          "id": 1,
+          "kind": "rent",
+          "ref_id": 1,
+          "amount": 2400.0,
+          "account": "checking",
+          "paid_at": "2026-08-31",
+          "approved_by": "smoke-test human"
+        },
+        "checking_after": 1000.0
+      }
+    },
+    {
+      "vibe_coder_prompt": "Queue rent for lease 1 again.",
+      "tool": "request_payment_approval",
+      "arguments": {
+        "pay_kind": "rent",
+        "ref_id": 1,
+        "rationale": "smoke test",
+        "prepared_by": "accountant",
+        "ticket_id": 102
+      },
+      "expected": "refused",
+      "outcome": "refused",
+      "passed": true,
+      "verified_against_db": [
+        "refused by server: Rent is due 2026-10-02 (32 days away); it can be queued 10 days before due at the earliest"
+      ],
+      "tool_output": "Rent is due 2026-10-02 (32 days away); it can be queued 10 days before due at the earliest"
+    },
+    {
+      "vibe_coder_prompt": "Give the Yale AI Club their 20 hoodies at $20 each on ticket 103.",
+      "tool": "resolve_ticket",
+      "arguments": {
+        "ticket_id": 103,
+        "status": "resolved",
+        "note": "smoke test: below cost",
+        "approved_unit_price": 20.0
+      },
+      "expected": "refused",
+      "outcome": "refused",
+      "passed": true,
+      "verified_against_db": [
+        "refused by server: approved_unit_price 20.00 must be between unit_cost 22.00 and list_price 58.00"
+      ],
+      "tool_output": "approved_unit_price 20.00 must be between unit_cost 22.00 and list_price 58.00"
+    },
+    {
+      "vibe_coder_prompt": "Ship Tauhid's size S tee on ticket 101 and close it.",
+      "tool": "resolve_ticket",
+      "arguments": {
+        "ticket_id": 101,
+        "status": "resolved",
+        "note": "smoke test: ship tee",
+        "fulfill_order": true
+      },
+      "expected": "refused",
+      "outcome": "refused",
+      "passed": true,
+      "verified_against_db": [
+        "refused by server: Short stock: CC-TEE-WHITE S has 0, ticket needs 1; partial shipments are not allowed"
+      ],
+      "tool_output": "Short stock: CC-TEE-WHITE S has 0, ticket needs 1; partial shipments are not allowed"
+    },
+    {
+      "vibe_coder_prompt": "Draft a reply to Tauhid on ticket 101 (do not send).",
+      "tool": "draft_customer_message",
+      "arguments": {
+        "ticket_id": 101,
+        "subject": "Your tee",
+        "body": "Smoke test draft.",
+        "prepared_by": "customer_service"
+      },
+      "expected": "ok",
+      "outcome": "ok",
+      "passed": true,
+      "verified_against_db": [
+        "draft 1 to Tauhid Zaman (tickets.requester); sent=False"
+      ],
+      "tool_output": {
+        "draft": {
+          "id": 1,
+          "ticket_id": 101,
+          "recipient": "Tauhid Zaman",
+          "subject": "Your tee",
+          "body": "Smoke test draft.",
+          "status": "draft",
+          "prepared_by": "customer_service",
+          "created_at": "2026-08-31"
+        },
+        "sent": false
+      }
+    },
+    {
+      "vibe_coder_prompt": "Show me the board.",
+      "tool": "get_board",
+      "arguments": {},
+      "expected": "ok",
+      "outcome": "ok",
+      "passed": true,
+      "verified_against_db": [
+        "board: checking 1000.0, 1 approvals, 1 drafts"
+      ],
+      "tool_output": {
+        "date_today": "2026-08-31",
+        "checking_balance": 1000.0,
+        "available_for_new_spending": 160.0,
+        "tickets": [
+          {
+            "id": 101,
+            "type": "customer_order",
+            "requester": "Tauhid Zaman",
+            "subject": "Bulldog tee",
+            "status": "open",
+            "notes": "Needs a tee in size S."
+          },
+          {
+            "id": 102,
+            "type": "rent_notice",
+            "requester": "Elm City Properties",
+            "subject": "Rent due",
+            "status": "open",
+            "notes": "Email: shop rent due in 2 days.\n[2026-08-31] Approval 1 queued by accountant: pay rent 1 $2400.00 (needs human)\n[2026-08-31] Approval 1 APPROVED by smoke-test human: rent $2400.00; payment 1"
+          },
+          {
+            "id": 103,
+            "type": "price_override",
+            "requester": "Yale AI Club",
+            "subject": "Bulk hoodie discount",
+            "status": "open",
+            "notes": "Student org wants 20 hoodies, size M, asking for a bulk discount."
+          }
+        ],
+        "approvals": [
+          {
+            "id": 1,
+            "kind": "payment",
+            "ticket_id": 102,
+            "pay_kind": "rent",
+            "ref_id": 1,
+            "period_due": "2026-09-02",
+            "vendor_id": null,
+            "sku": null,
+            "size": null,
+            "qty": null,
+            "amount": 2400.0,
+            "amount_basis": "leases.monthly_rent, lease 1 to Elm City Properties, period due 2026-09-02",
+            "rationale": "smoke test",
+            "prepared_by": "accountant",
+            "status": "approved",
+            "created_at": "2026-08-31",
+            "decided_by": "smoke-test human",
+            "decided_at": "2026-08-31",
+            "decision_reason": null,
+            "payment_id": 1,
+            "expected_date": null
+          }
+        ],
+        "drafts": [
+          {
+            "id": 1,
+            "ticket_id": 101,
+            "recipient": "Tauhid Zaman",
+            "subject": "Your tee",
+            "body": "Smoke test draft.",
+            "status": "draft",
+            "prepared_by": "customer_service",
+            "created_at": "2026-08-31"
+          }
+        ]
+      }
+    }
+  ]
+}

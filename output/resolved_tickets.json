@@ -1,0 +1,74 @@
+{
+  "board": "Campus Customs — Problem 9 real run (practice run: nothing emailed, no vendor contacted)",
+  "database": "data/campus_customs_new.db",
+  "reset_before_run": "POST /api/reset — working copy restored to the original (sha256 23686a90…f360a)",
+  "shop_date": "2026-08-31",
+  "model": "gpt-6-luna via Portkey",
+  "checking_start": 3400.00,
+  "checking_end": 160.00,
+  "cash_math": "3400.00 - 2400.00 (rent, ticket 102) - 840.00 (invoice 501, ticket 101) - 0.00 (ticket 103) = 160.00",
+  "tickets": [
+    {
+      "id": 101,
+      "subject": "Bulldog tee",
+      "type": "customer_order",
+      "requester": "Tauhid Zaman",
+      "final_status": "resolved",
+      "outcome": "Size S tee out of stock (0 on hand). Open invoice 501 ($840, Bulldog Print Co) already covered the rush reprint, so the team queued its payment instead of a new PO; the human approved it, releasing the reprint (earliest arrival 2026-09-05). Draft #1 offers in-stock sizes M (5), L (3), XL (2) or waiting for S.",
+      "runs": 2,
+      "agent_contributions": {
+        "boss": "Routed the ticket to inventory, then customer service; first pass set pending on approval #1; follow-up re-checked stock with inventory and resolved once the invoice was paid. Tools: resolve_ticket (x2).",
+        "inventory": "check_stock found 0 size S and that open invoice 501 covers the restock; delegated payment prep to the accountant; follow-up check_stock confirmed invoice 501 no longer blocks and ETA 2026-09-05.",
+        "accountant": "get_finances, then request_payment_approval for invoice 501 ($840) as approval #1; noted checking $3,400 -> $2,560 after that pending payment.",
+        "facilities": null,
+        "customer_service": "draft_customer_message: draft #1 to Tauhid Zaman with the 9/5 expected restock (pending confirmation) and sizes M/L/XL; stays on the board, never sent."
+      },
+      "human_approvals": [
+        {"approval_id": 1, "what": "Pay invoice 501 to Bulldog Print Co", "amount": 840.00, "decision": "approved", "decided_by": "Megan Tachev", "payment_id": 2, "checking_after": 160.00}
+      ],
+      "cash_change": -840.00,
+      "tokens": {"model_calls": 17, "input": 31854, "output": 2521}
+    },
+    {
+      "id": 102,
+      "subject": "Rent due",
+      "type": "rent_notice",
+      "requester": "Elm City Properties",
+      "final_status": "resolved",
+      "outcome": "Notice verified against lease 1 (Elm City Properties, $2,400, due 2026-09-02). Rent payment queued, approved by the human and paid (payment #1); lease next_due advanced to 2026-10-02.",
+      "runs": 3,
+      "agent_contributions": {
+        "boss": "Routed to facilities; pending on approval #2; follow-up 1 stayed pending because the accountant couldn't see the payment ledger (tool gap, since fixed); follow-up 2 resolved after the ledger confirmed payment #1. Tools: resolve_ticket (x3).",
+        "inventory": null,
+        "accountant": "get_finances, then request_payment_approval for rent on lease 1 ($2,400) as approval #2; on follow-ups get_finances, finally confirming payment #1 for the 2026-09-02 period. One delegate attempt back to the boss was blocked by the loop guard.",
+        "facilities": "get_lease_status: requester matches the landlord, $2,400 unpaid, due in 2 days, inside the pay window; delegated rent payment prep to the accountant.",
+        "customer_service": null
+      },
+      "human_approvals": [
+        {"approval_id": 2, "what": "Pay rent, lease 1, to Elm City Properties (period due 2026-09-02)", "amount": 2400.00, "decision": "approved", "decided_by": "Megan Tachev", "payment_id": 1, "checking_after": 1000.00}
+      ],
+      "cash_change": -2400.00,
+      "tokens": {"model_calls": 20, "input": 38207, "output": 2765}
+    },
+    {
+      "id": 103,
+      "subject": "Bulk hoodie discount",
+      "type": "price_override",
+      "requester": "Yale AI Club",
+      "final_status": "resolved",
+      "outcome": "Bulk price approved at $46.40/unit for 20 (20% off $58.00 list; $24.40/unit, 52.6% margin; $928 revenue, $488 margin). Only 8 size M in stock; the 12-unit PO ($264 estimate) was refused by the server because vendor 1 had open invoice 501. No partial shipment; draft #2 offers the 8 in stock, sizes S (4)/L (14)/XL (6), or waiting.",
+      "runs": 1,
+      "agent_contributions": {
+        "boss": "Routed to inventory (who brought in the accountant), then customer service; resolved with approved_unit_price 46.40. Tools: resolve_ticket.",
+        "inventory": "check_stock: 8 size M on hand, shortfall 12, vendor 1 ships_new_product=false (invoice 501); delegated pricing + PO prep to the accountant.",
+        "accountant": "get_finances; quote_margin at 20% off -> $46.40 (52.6% margin); request_purchase_order for 12 refused (vendor 1 has unpaid invoice 501).",
+        "facilities": null,
+        "customer_service": "draft_customer_message: draft #2 to Yale AI Club quoting $46.40 each, 8 in stock, restock pending confirmation, alternatives; never sent."
+      },
+      "human_approvals": [],
+      "cash_change": 0.00,
+      "tokens": {"model_calls": 11, "input": 20818, "output": 2556}
+    }
+  ],
+  "totals": {"model_calls": 48, "input_tokens": 90879, "output_tokens": 7842, "tokens": 98721}
+}
