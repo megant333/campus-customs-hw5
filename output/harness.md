@@ -258,3 +258,4 @@ Verified on a scratch copy, launched as above but on port 8001, because port 800
 - **Problem 7:** added the FastAPI backend routes for the React dashboard.
 - **Problem 8:** built the React agent dashboard with the pinball signal map, the token sidebar, and live agent lanes (see `output/design.md`).
 - **Problem 9:** reset the database, ran all 3 tickets to resolved with 2 human approvals (checking $3,400 → $160), filled the desk page's Actual and Cash sections, and wrote `resolved_tickets.json` and `resolved_board.html`.
+- **Problem 11:** pushed to https://github.com/megant333/campus-customs-hw5 (public). Both databases are under `data/`, the real `.env` is excluded (`.env.example` is provided), and launch paths are portable. A fresh clone was tested: install, smoke test 12/12, board build, and backend reset.

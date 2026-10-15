@@ -166,3 +166,17 @@ It didn't say who gives the human approval for the payments, which the safety ru
 ### What was lacking in the first prompt
 
 By design, the first prompt left the reflection answers themselves for this follow-up, to be pasted verbatim. The first follow-up was needed because the browser tab had been opened before the Reflection tab was added, so it had to be reopened on that tab.
+
+## Problem 11 — Push to a Public GitHub Repository
+
+### Prompt typed
+
+> prompt 11: push code to public github repository so graders can clone it, submit repo url to canvas and also put it in output/github_url.txt dont push the real .env to github repo but DO include both database files under data/ for graders to be able to run my app easily. Make sure readme explains copy original db to working copy when you need a clean run, start mcp server, start fastapi backend, react board, reset db before full three-ticket run. Thank you!
+
+### Follow-up prompt
+
+No follow-up prompt was needed for clarification.
+
+### What was lacking in the first prompt
+
+Nothing required correction. The original database lived in `data 3/`, so it was copied to `data/campus_customs.db` to meet "both database files under data/". Submitting to Canvas has to be done by you, because there is no Canvas access from here; the URL is in `output/github_url.txt`.
